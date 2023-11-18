@@ -2,8 +2,8 @@ package la_dominga.servidor;
 
 
 import la_dominga.configuraciones.PropiedadesAlmacenamientoArchivo;
-import la_dominga.configuraciones.excepciones.ExcepciónAlmacenamientoArchivo;
-import la_dominga.configuraciones.excepciones.ExcepciónArchivoNoEncontrado;
+import la_dominga.excepciones.ExcepciónAlmacenamientoArchivo;
+import la_dominga.excepciones.ExcepciónArchivoNoEncontrado;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;

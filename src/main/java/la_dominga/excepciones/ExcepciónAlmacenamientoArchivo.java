@@ -1,4 +1,4 @@
-package la_dominga.configuraciones.excepciones;
+package la_dominga.excepciones;
 
 public class ExcepciónAlmacenamientoArchivo extends RuntimeException {
     public ExcepciónAlmacenamientoArchivo(String message) {
