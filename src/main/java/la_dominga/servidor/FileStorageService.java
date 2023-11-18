@@ -2,8 +2,8 @@ package la_dominga.servidor;
 
 
 import la_dominga.configuraciones.PropiedadesAlmacenamientoArchivo;
-import la_dominga.excepciones.ExcepciónAlmacenamientoArchivo;
-import la_dominga.excepciones.ExcepciónArchivoNoEncontrado;
+import la_dominga.exception.FileStorageException;
+import la_dominga.exception.MyFileNotFoundException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -41,7 +41,7 @@ public class FileStorageService {
             return fileName;
 
         } catch (IOException e) {
-            throw new ExcepciónAlmacenamientoArchivo("No se pudo almacenar el archivo", e);
+            throw new FileStorageException("No se pudo almacenar el archivo", e);
         }
     }
 
@@ -56,7 +56,7 @@ public class FileStorageService {
             Files.createDirectories(fileStorageLocation);
             return fileStorageLocation;
         } catch (IOException e) {
-            throw new ExcepciónAlmacenamientoArchivo("No se pudo crear el directorio", e);
+            throw new FileStorageException("No se pudo crear el directorio", e);
         }
     }
 
@@ -68,11 +68,11 @@ public class FileStorageService {
             if (resource.exists()) {
                 return resource;
             } else {
-                throw new ExcepciónArchivoNoEncontrado("Archivo no encontrado: " + completeFileName);
+                throw new MyFileNotFoundException("Archivo no encontrado: " + completeFileName);
             }
 
         } catch (MalformedURLException e) {
-            throw new ExcepciónArchivoNoEncontrado("Ha ocurrido un error al intentar acceder al archivo: " + completeFileName, e);
+            throw new MyFileNotFoundException("Ha ocurrido un error al intentar acceder al archivo: " + completeFileName, e);
         }
     }
 }

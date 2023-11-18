@@ -1,4 +1,4 @@
-package la_dominga.excepciones;
+package la_dominga.exception;
 
 
 
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class ManejadorExcepciónGenérico {
+public class GenericExceptionHandler {
     @ExceptionHandler(Exception.class)
     public RespuestaServidor genericException(Exception ex) {
         return new RespuestaServidor("exception", -1, Global.OPERACION_ERRONEA, ex.getMessage());

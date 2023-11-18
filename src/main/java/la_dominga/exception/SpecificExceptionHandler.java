@@ -1,4 +1,4 @@
-package la_dominga.excepciones;
+package la_dominga.exception;
 
 
 import la_dominga.configuraciones.RespuestaServidor;
@@ -14,7 +14,7 @@ import static la_dominga.configuraciones.Global.*;
 
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
-public class ManejadorExcepciónEspecífico {
+public class SpecificExceptionHandler {
     @ExceptionHandler(JDBCException.class)
     public RespuestaServidor sqlException(JDBCException ex) {
         return new RespuestaServidor("sql-exception", -1, Global.OPERACION_ERRONEA, ex.getMessage());
@@ -25,13 +25,13 @@ public class ManejadorExcepciónEspecífico {
         return new RespuestaServidor("valid-exception", RPTA_ERROR, OPERACION_ERRONEA, ex.getMessage());
     }
 
-    @ExceptionHandler(ExcepciónAlmacenamientoArchivo.class)
-    public RespuestaServidor fileStorageException(ExcepciónAlmacenamientoArchivo ex) {
+    @ExceptionHandler(FileStorageException.class)
+    public RespuestaServidor fileStorageException(FileStorageException ex) {
         return new RespuestaServidor("file-storage-exception", RPTA_ERROR, OPERACION_ERRONEA, ex.getMessage());
     }
 
-    @ExceptionHandler(ExcepciónArchivoNoEncontrado.class)
-    public RespuestaServidor myFileNotFoundException(ExcepciónArchivoNoEncontrado exception) {
+    @ExceptionHandler(MyFileNotFoundException.class)
+    public RespuestaServidor myFileNotFoundException(MyFileNotFoundException exception) {
         return new RespuestaServidor("my-file-not-found-exception", RPTA_ERROR, OPERACION_INCORRECTA, exception.getMessage());
     }
 }
