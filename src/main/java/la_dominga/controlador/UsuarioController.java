@@ -7,6 +7,7 @@ import la_dominga.servidor.UsuarioService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("usuario")
@@ -28,5 +29,8 @@ public class UsuarioController {
         String contrasenia = request.getParameter("clave");
         return this.service.iniciarSesion(email, contrasenia);
     }
-
+    @GetMapping
+    public List<Usuario> listarUsuarios() {
+        return service.listarUsuarios();
+    }
 }

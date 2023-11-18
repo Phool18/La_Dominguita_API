@@ -15,7 +15,7 @@ public class Cliente {
     private String nombreCompleto;
 
     @NotNull
-    @Size(min = 1, max = 9, message = "El número telefónico debe tener entre 1 y 9 dígitos")
+    @Size(min = 9, max = 9, message = "El número telefónico debe tener exactamente 9 dígitos")
     private String numeroTelefonico;
 
     @OneToOne

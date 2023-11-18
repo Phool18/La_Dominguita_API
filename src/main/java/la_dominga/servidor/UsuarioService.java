@@ -8,6 +8,7 @@ import la_dominga.repositorio.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 import static la_dominga.configuraciones.Global.*;
@@ -40,5 +41,7 @@ public class UsuarioService {
             return new RespuestaServidor(TIPO_DATA, RPTA_OK, "Datos del usuario actualizados", this.repository.save(u));
         }
     }
-
+    public List<Usuario> listarUsuarios() {
+        return repository.findAll();
+    }
 }
