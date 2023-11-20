@@ -1,5 +1,8 @@
 package la_dominga.entidades;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -8,18 +11,16 @@ import java.util.List;
 public class Compra {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "usuario_id")
+    @Fetch(FetchMode.JOIN)
     private Usuario usuario;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCompra;
-
-    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
-    private List<ItemCompra> items;
-
+    @Column
     private double total;
 
     @Enumerated(EnumType.STRING)
@@ -28,21 +29,20 @@ public class Compra {
     public Compra() {
     }
 
-    public Compra(Long id, Usuario usuario, Date fechaCompra, List<ItemCompra> items, double total, EstadoCompra estado) {
+
+    public Compra(int id, Usuario usuario, Date fechaCompra, double total, EstadoCompra estado) {
         this.id = id;
         this.usuario = usuario;
         this.fechaCompra = fechaCompra;
-        this.items = items;
         this.total = total;
         this.estado = estado;
     }
 
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -60,14 +60,6 @@ public class Compra {
 
     public void setFechaCompra(Date fechaCompra) {
         this.fechaCompra = fechaCompra;
-    }
-
-    public List<ItemCompra> getItems() {
-        return items;
-    }
-
-    public void setItems(List<ItemCompra> items) {
-        this.items = items;
     }
 
     public double getTotal() {

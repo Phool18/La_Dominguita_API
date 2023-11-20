@@ -6,17 +6,23 @@ import javax.persistence.*;
 public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
+    @Column
     private String nombre;
+    @Column
     private String descripcion;
+    @Column
     private double precio;
+    @Column
     private int cantidadEnStock;
+    @OneToOne
+    private Categoria categoria;
     @OneToOne
     private Foto foto;
     public Producto() {
     }
 
-    public Producto(Long id, String nombre, String descripcion, double precio, int cantidadEnStock, Foto foto) {
+    public Producto(int id, String nombre, String descripcion, double precio, int cantidadEnStock, Foto foto) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -25,11 +31,11 @@ public class Producto {
         this.foto = foto;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -2,6 +2,7 @@ package la_dominga.entidades;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -11,10 +12,11 @@ public class Cliente {
     private int id;
 
     @NotNull
-    @Size(min = 1, max = 200)
+    @Size(min = 1, max = 200, message = "El nombre sobrepasa lo permitido, por favor comunicarse con un administrador")
     private String nombreCompleto;
 
     @NotNull
+    @Pattern(regexp = "[0-9]+", message = "El número telefónico solo debe contener dígitos")
     @Size(min = 9, max = 9, message = "El número telefónico debe tener exactamente 9 dígitos")
     private String numeroTelefonico;
 

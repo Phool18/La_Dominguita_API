@@ -1,50 +1,62 @@
 package la_dominga.entidades;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
+
 @Entity
 public class CarritoDeCompras {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @OneToOne
-    private Usuario usuario;
-
-    @OneToMany(mappedBy = "carritoDeCompras", cascade = CascadeType.ALL)
-    private List<ItemCarrito> items;
-
+    private int id;
+    @Column
+    @JsonFormat(pattern = "dd-MM-yyyy", timezone = "America/Lima")
+    private Date fechaCompra;
+    @ManyToOne
+    private Cliente cliente;
+    @Column
+    private Double monto;
 
     public CarritoDeCompras() {
     }
 
-    public CarritoDeCompras(Long id, Usuario usuario, List<ItemCarrito> items) {
+    public CarritoDeCompras(int id, Date fechaCompra, Cliente cliente, Double monto) {
         this.id = id;
-        this.usuario = usuario;
-        this.items = items;
+        this.fechaCompra = fechaCompra;
+        this.cliente = cliente;
+        this.monto = monto;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Date getFechaCompra() {
+        return fechaCompra;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setFechaCompra(Date fechaCompra) {
+        this.fechaCompra = fechaCompra;
     }
 
-    public List<ItemCarrito> getItems() {
-        return items;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setItems(List<ItemCarrito> items) {
-        this.items = items;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Double getMonto() {
+        return monto;
+    }
+
+    public void setMonto(Double monto) {
+        this.monto = monto;
     }
 }

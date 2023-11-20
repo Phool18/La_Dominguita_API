@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.validation.ConstraintViolation;
+import javax.validation.ValidationException;
 import javax.validation.Validator;
 import java.util.List;
 import java.util.Optional;
@@ -25,24 +26,25 @@ public class ClienteService {
         this.validator = validator;
     }
 
-    public RespuestaServidor<Optional<Cliente>> guardarCliente(Cliente cliente) {
+    public RespuestaServidor<Cliente> guardarCliente(Cliente cliente) {
         Set<ConstraintViolation<Cliente>> violaciones = validator.validate(cliente);
         if (!violaciones.isEmpty()) {
             StringBuilder mensajes = new StringBuilder();
             for (ConstraintViolation<Cliente> violacion : violaciones) {
                 mensajes.append(violacion.getMessage()).append("\n");
             }
-            return new RespuestaServidor<>("Error", 400, mensajes.toString(), Optional.empty());
+            throw new ValidationException(mensajes.toString());
         }
 
         try {
             Cliente clienteGuardado = clienteRepository.save(cliente);
-            return new RespuestaServidor<>("Success", 200, "Cliente guardado con éxito", Optional.of(clienteGuardado));
+            return new RespuestaServidor<>("Success", 200, "Cliente guardado con éxito", clienteGuardado);
         } catch (Exception e) {
-            return new RespuestaServidor<>("Error", 500, "Error al guardar el cliente: " + e.getMessage(), Optional.empty());
+            // Aquí puedes manejar diferentes tipos de excepciones de manera más específica si lo deseas
+            return new RespuestaServidor<>("Error", 500, "Error al guardar el cliente: " + e.getMessage(), null);
         }
     }
     public List<Cliente> listarClientes() {
-        return clienteRepository.findAll();
+        return clienteRepository.listarTodosLosClientes();
     }
 }

@@ -1,47 +1,37 @@
 package la_dominga.servidor;
 
-
-
 import la_dominga.configuraciones.RespuestaServidor;
 import la_dominga.entidades.Usuario;
 import la_dominga.repositorio.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
-
 import static la_dominga.configuraciones.Global.*;
-
 
 @Service
 @Transactional
 public class UsuarioService {
     private final UsuarioRepository repository;
 
+    @Autowired
     public UsuarioService(UsuarioRepository repository) {
         this.repository = repository;
     }
-    //Método para iniciar sesión
     public RespuestaServidor<Usuario> iniciarSesion(String correo, String clave){
         Optional<Usuario> optU = this.repository.iniciarSesion(correo, clave);
-        if(optU.isPresent()){
-            return new RespuestaServidor<Usuario>(TIPO_AUTH, RPTA_OK, "Haz iniciado sesión correctamente", optU.get());
-        }else{
-            return new RespuestaServidor<Usuario>(TIPO_AUTH, RPTA_WARNING, "Lo sentimos, ese usuario no existe", new Usuario());
-        }
+        return optU.map(usuario -> new RespuestaServidor<>(TIPO_AUTH, RPTA_OK, "Haz iniciado sesión correctamente", usuario))
+                .orElseGet(() -> new RespuestaServidor<>(TIPO_AUTH, RPTA_WARNING, "Lo sentimos, ese usuario no existe", null));
     }
-    //Método para guardar credenciales del usuario
-    public RespuestaServidor guardarUsuario(Usuario u){
-        Optional<Usuario> optU = this.repository.findById(u.getId());
-        int idf = optU.isPresent() ? optU.get().getId() : 0;
-        if(idf == 0){
-            return new RespuestaServidor(TIPO_DATA, RPTA_OK, "Usuario Registrado Correctamente", this.repository.save(u));
-        }else{
-            return new RespuestaServidor(TIPO_DATA, RPTA_OK, "Datos del usuario actualizados", this.repository.save(u));
-        }
+    public RespuestaServidor<Usuario> guardarUsuario(Usuario u){
+        boolean existe = u.getId() > 0 && repository.existsById(u.getId());
+        Usuario usuarioGuardado = this.repository.save(u);
+        String mensaje = existe ? "Datos del usuario actualizados" : "Usuario Registrado Correctamente";
+        return new RespuestaServidor<>(TIPO_DATA, RPTA_OK, mensaje, usuarioGuardado);
     }
+
     public List<Usuario> listarUsuarios() {
-        return repository.findAll();
+        return repository.listarTodosLosUsuarios();
     }
 }

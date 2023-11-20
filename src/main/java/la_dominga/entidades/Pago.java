@@ -1,5 +1,8 @@
 package la_dominga.entidades;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Date;
 import javax.persistence.*;
 
@@ -7,36 +10,33 @@ import javax.persistence.*;
 public class Pago {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
     @OneToOne
     @JoinColumn(name = "compra_id")
     private Compra compra;
-
+    @Column
     private double monto;
-
-    @Temporal(TemporalType.TIMESTAMP)
+    @Column
+    @JsonFormat(pattern = "dd-MM-YYYY",timezone = "America/Lima")
     private Date fechaPago;
 
-    @Enumerated(EnumType.STRING)
-    private MetodoPago metodo;
 
     public Pago() {
     }
 
-    public Pago(Long id, Compra compra, double monto, Date fechaPago, MetodoPago metodo) {
+    public Pago(int id, Compra compra, double monto, Date fechaPago) {
         this.id = id;
         this.compra = compra;
         this.monto = monto;
         this.fechaPago = fechaPago;
-        this.metodo = metodo;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -64,11 +64,4 @@ public class Pago {
         this.fechaPago = fechaPago;
     }
 
-    public MetodoPago getMetodo() {
-        return metodo;
-    }
-
-    public void setMetodo(MetodoPago metodo) {
-        this.metodo = metodo;
-    }
 }
