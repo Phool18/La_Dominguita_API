@@ -14,7 +14,7 @@ public class Pago {
 
     @OneToOne
     @JoinColumn(name = "compra_id")
-    private Compra compra;
+    private CarritoDeCompras carritoDeCompras;
     @Column
     private double monto;
     @Column
@@ -25,9 +25,9 @@ public class Pago {
     public Pago() {
     }
 
-    public Pago(int id, Compra compra, double monto, Date fechaPago) {
+    public Pago(int id, CarritoDeCompras carritoDeCompras, double monto, Date fechaPago) {
         this.id = id;
-        this.compra = compra;
+        this.carritoDeCompras = carritoDeCompras;
         this.monto = monto;
         this.fechaPago = fechaPago;
     }
@@ -40,12 +40,13 @@ public class Pago {
         this.id = id;
     }
 
-    public Compra getCompra() {
-        return compra;
+
+    public CarritoDeCompras getCarritoDeCompras() {
+        return carritoDeCompras;
     }
 
-    public void setCompra(Compra compra) {
-        this.compra = compra;
+    public void setCarritoDeCompras(CarritoDeCompras carritoDeCompras) {
+        this.carritoDeCompras = carritoDeCompras;
     }
 
     public double getMonto() {

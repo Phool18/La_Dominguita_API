@@ -2,7 +2,7 @@ package la_dominga.exception;
 
 
 import la_dominga.configuraciones.RespuestaServidor;
-import la_dominga.configuraciones.Global;
+import la_dominga.configuraciones.Resultado;
 import org.hibernate.JDBCException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -10,14 +10,14 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static la_dominga.configuraciones.Global.*;
+import static la_dominga.configuraciones.Resultado.*;
 
 @RestControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SpecificExceptionHandler {
     @ExceptionHandler(JDBCException.class)
     public RespuestaServidor sqlException(JDBCException ex) {
-        return new RespuestaServidor("sql-exception", -1, Global.OPERACION_ERRONEA, ex.getMessage());
+        return new RespuestaServidor("sql-exception", -1, Resultado.OPERACION_ERRONEA, ex.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

@@ -1,39 +1,39 @@
 package la_dominga.entidades.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import la_dominga.entidades.CarritoDeCompras;
 import la_dominga.entidades.Cliente;
-import la_dominga.entidades.Compra;
 import la_dominga.entidades.DatosCompra;
 
 public class CrearPedidoDTO {
-    private Compra compra ;
+    private CarritoDeCompras carritoDeCompras ;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Iterable<DatosCompra> detallePedidos;
+    private Iterable<DatosCompra> informacionDeLaVenta;
     private Cliente cliente;
 
     public CrearPedidoDTO() {
     }
 
-    public CrearPedidoDTO(Compra compra, Iterable<DatosCompra> detallePedidos, Cliente cliente) {
-        this.compra = compra;
-        this.detallePedidos = detallePedidos;
+    public CrearPedidoDTO(CarritoDeCompras carritoDeCompras, Iterable<DatosCompra> informacionDeLaVenta, Cliente cliente) {
+        this.carritoDeCompras = carritoDeCompras;
+        this.informacionDeLaVenta = informacionDeLaVenta;
         this.cliente = cliente;
     }
 
-    public Compra getCompra() {
-        return compra;
+    public CarritoDeCompras getCarritoDeCompras() {
+        return carritoDeCompras;
     }
 
-    public void setCompra(Compra compra) {
-        this.compra = compra;
+    public void setCarritoDeCompras(CarritoDeCompras carritoDeCompras) {
+        this.carritoDeCompras = carritoDeCompras;
     }
 
-    public Iterable<DatosCompra> getDetallePedidos() {
-        return detallePedidos;
+    public Iterable<DatosCompra> getInformacionDeLaVenta() {
+        return informacionDeLaVenta;
     }
 
-    public void setDetallePedidos(Iterable<DatosCompra> detallePedidos) {
-        this.detallePedidos = detallePedidos;
+    public void setInformacionDeLaVenta(Iterable<DatosCompra> informacionDeLaVenta) {
+        this.informacionDeLaVenta = informacionDeLaVenta;
     }
 
     public Cliente getCliente() {

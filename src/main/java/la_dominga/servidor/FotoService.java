@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.HashMap;
 
-import static la_dominga.configuraciones.Global.*;
+import static la_dominga.configuraciones.Resultado.*;
 
 @Service
 @Transactional

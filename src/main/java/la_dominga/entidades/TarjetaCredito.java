@@ -2,7 +2,7 @@ package la_dominga.entidades;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-
+@Entity
 public class TarjetaCredito {
 
     @Id

@@ -1,29 +1,29 @@
 package la_dominga.entidades.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import la_dominga.entidades.Compra;
+import la_dominga.entidades.CarritoDeCompras;
 import la_dominga.entidades.DatosCompra;
 
 public class ImprimirPedidosDTO {
 
-    private Compra compra ;
+    private CarritoDeCompras carritoDeCompras ;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Iterable<DatosCompra> detallePedido;
 
     public ImprimirPedidosDTO() {
     }
 
-    public ImprimirPedidosDTO(Compra compra, Iterable<DatosCompra> detallePedido) {
-        this.compra = compra;
+    public ImprimirPedidosDTO(CarritoDeCompras carritoDeCompras, Iterable<DatosCompra> detallePedido) {
+        this.carritoDeCompras = carritoDeCompras;
         this.detallePedido = detallePedido;
     }
 
-    public Compra getCompra() {
-        return compra;
+    public CarritoDeCompras getCarritoDeCompras() {
+        return carritoDeCompras;
     }
 
-    public void setCompra(Compra compra) {
-        this.compra = compra;
+    public void setCarritoDeCompras(CarritoDeCompras carritoDeCompras) {
+        this.carritoDeCompras = carritoDeCompras;
     }
 
     public Iterable<DatosCompra> getDetallePedido() {

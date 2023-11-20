@@ -14,17 +14,17 @@ public class DatosCompra {
     @ManyToOne
     private Producto producto;
     @ManyToOne
-    private Compra compra;
+    private CarritoDeCompras carritoDeCompras;
 
     public DatosCompra() {
     }
 
-    public DatosCompra(int id, int cantidad, Double precio, Producto producto, Compra compra) {
+    public DatosCompra(int id, int cantidad, Double precio, Producto producto, CarritoDeCompras carritoDeCompras) {
         this.id = id;
         this.cantidad = cantidad;
         this.precio = precio;
         this.producto = producto;
-        this.compra = compra;
+        this.carritoDeCompras = carritoDeCompras;
     }
 
     public int getId() {
@@ -59,11 +59,11 @@ public class DatosCompra {
         this.producto = producto;
     }
 
-    public Compra getCompra() {
-        return compra;
+    public CarritoDeCompras getCarritoDeCompras() {
+        return carritoDeCompras;
     }
 
-    public void setCompra(Compra compra) {
-        this.compra = compra;
+    public void setCarritoDeCompras(CarritoDeCompras carritoDeCompras) {
+        this.carritoDeCompras = carritoDeCompras;
     }
 }
