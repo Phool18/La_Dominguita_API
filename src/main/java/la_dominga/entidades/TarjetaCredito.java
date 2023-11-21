@@ -10,11 +10,19 @@ public class TarjetaCredito {
     private int id;
 
     @Column
+<<<<<<< HEAD
+    @Size(min = 16, max = 16, message = "Error")
+    private String numeroTarjeta;
+
+    @Column()
+    @Size(min = 1, max = 100, message = "El titular debe tener entre 1 y 100 caracteres.")
+=======
     @Size(min = 1, max = 50, message = "Error")
     private String numeroTarjeta;
 
     @Column()
     @Size(min = 16, max = 16, message = "Error")
+>>>>>>> e5fd409af7e72c79adb0df104c37fa23609c9c30
     private String titular;
 
     @Column

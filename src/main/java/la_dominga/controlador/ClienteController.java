@@ -42,7 +42,7 @@ public class ClienteController {
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
     @GetMapping
-    public List<Cliente> listarClientes() {
-        return service.listarClientes();
+    public RespuestaServidor<List<Cliente>> listarClientes() {
+        return new RespuestaServidor<>("Success", 200, "Listado de clientes", service.listarClientes());
     }
 }

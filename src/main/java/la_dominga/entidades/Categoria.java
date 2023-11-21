@@ -1,6 +1,11 @@
 package la_dominga.entidades;
 
 import javax.persistence.*;
+<<<<<<< HEAD
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+=======
+>>>>>>> e5fd409af7e72c79adb0df104c37fa23609c9c30
 
 @Entity
 public class Categoria {
@@ -8,6 +13,11 @@ public class Categoria {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(length = 100)
+<<<<<<< HEAD
+    @NotBlank(message = "El nombre de la categoría no puede estar vacío.")
+    @Size(max = 100, message = "El nombre de la categoría no puede superar los 100 caracteres.")
+=======
+>>>>>>> e5fd409af7e72c79adb0df104c37fa23609c9c30
     private String nombre;
     @OneToOne
     private Foto foto;
