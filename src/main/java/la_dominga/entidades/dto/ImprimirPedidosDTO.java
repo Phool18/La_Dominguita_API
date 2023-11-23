@@ -1,6 +1,5 @@
 package la_dominga.entidades.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import la_dominga.entidades.CarritoDeCompras;
 import la_dominga.entidades.DatosCompra;
 
