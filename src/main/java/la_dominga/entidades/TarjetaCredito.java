@@ -1,7 +1,11 @@
 package la_dominga.entidades;
 
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
+import java.time.Year;
+
 @Entity
 public class TarjetaCredito {
 
@@ -10,27 +14,21 @@ public class TarjetaCredito {
     private int id;
 
     @Column
-<<<<<<< HEAD
     @Size(min = 16, max = 16, message = "Error")
     private String numeroTarjeta;
 
     @Column()
     @Size(min = 1, max = 100, message = "El titular debe tener entre 1 y 100 caracteres.")
-=======
-    @Size(min = 1, max = 50, message = "Error")
-    private String numeroTarjeta;
-
-    @Column()
-    @Size(min = 16, max = 16, message = "Error")
->>>>>>> e5fd409af7e72c79adb0df104c37fa23609c9c30
     private String titular;
 
     @Column
+    @Pattern(regexp = "^(0[1-9]|1[0-2])/(\\d{2})$", message = "El formato de mes_anio debe ser MM/yy")
     private String mes_anio;
 
     @Column
     @Size(min = 3, max = 3, message = "Error")
     private String cvv;
+
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
@@ -93,5 +91,22 @@ public class TarjetaCredito {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+
+    public boolean isValidDate() {
+        try {
+            // Intenta analizar la cadena mes_anio en un objeto LocalDate
+            String[] parts = mes_anio.split("/");
+            int month = Integer.parseInt(parts[0]);
+            int year = Integer.parseInt("20" + parts[1]); // Suponiendo que siempre es en el siglo XXI
+
+            LocalDate inputDate = LocalDate.of(Year.now().getValue(), month, 1);
+            LocalDate currentDate = LocalDate.now();
+
+            return !inputDate.isBefore(currentDate);
+        } catch (Exception e) {
+            return false; // Error al analizar la cadena o fecha en el pasado
+        }
     }
 }

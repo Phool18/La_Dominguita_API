@@ -1,8 +1,4 @@
 package la_dominga.configuraciones;
-<<<<<<< HEAD
-
-=======
->>>>>>> e5fd409af7e72c79adb0df104c37fa23609c9c30
 public class Resultado {
     public enum Estado {
         A,

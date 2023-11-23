@@ -21,11 +21,4 @@ public interface ProductoRepository extends CrudRepository<Producto, Integer> {
     @Modifying
     @Query("UPDATE Producto p SET p.cantidadEnStock = p.cantidadEnStock - :cant WHERE p.id = :id")
     void gestionarVenta(@Param("cant") int cantidad, @Param("id") int id);
-<<<<<<< HEAD
-
-
-
-
-=======
->>>>>>> e5fd409af7e72c79adb0df104c37fa23609c9c30
 }

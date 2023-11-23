@@ -2,17 +2,22 @@ package la_dominga.entidades;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Email
+
+    @Email(message = "El correo electrónico debe ser una dirección de correo válida.")
     @Column(length = 500)
     private String correo;
-    @Column(length = 30)
+
+    @Column(length = 1000)
+    @Size(min = 5, message = "La clave debe tener al menos 5 caracteres.")
     private String clave;
+
     @OneToOne
     private Cliente cliente;
     public int getId() {

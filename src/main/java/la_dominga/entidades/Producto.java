@@ -11,7 +11,6 @@ public class Producto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-<<<<<<< HEAD
 
     @Column
     @NotBlank(message = "El nombre no puede estar vacío.")
@@ -30,15 +29,6 @@ public class Producto {
     @Column
     @NotNull(message = "La cantidad en stock no puede ser nula.")
     @Min(value = 0, message = "La cantidad en stock no puede ser menor que cero.")
-=======
-    @Column
-    private String nombre;
-    @Column
-    private String descripcion;
-    @Column
-    private double precio;
-    @Column
->>>>>>> e5fd409af7e72c79adb0df104c37fa23609c9c30
     private int cantidadEnStock;
 
     @OneToOne
@@ -46,17 +36,11 @@ public class Producto {
     private Categoria categoria;
 
     @OneToOne
-    private Categoria categoria;
-    @OneToOne
     private Foto foto;
     public Producto() {
     }
 
-<<<<<<< HEAD
     public Producto(int id, String nombre, String descripcion, double precio, int cantidadEnStock, Categoria categoria, Foto foto) {
-=======
-    public Producto(int id, String nombre, String descripcion, double precio, int cantidadEnStock, Foto foto) {
->>>>>>> e5fd409af7e72c79adb0df104c37fa23609c9c30
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;

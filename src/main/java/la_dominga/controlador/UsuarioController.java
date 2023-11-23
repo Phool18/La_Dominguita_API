@@ -2,6 +2,7 @@ package la_dominga.controlador;
 
 import la_dominga.configuraciones.RespuestaServidor;
 import la_dominga.entidades.Usuario;
+import la_dominga.entidades.dto.ActualizarUsuarioDTO;
 import la_dominga.servidor.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,4 +38,15 @@ public class UsuarioController {
         List<Usuario> usuarios = service.listarUsuarios();
         return ResponseEntity.ok(usuarios);
     }
+
+    @PutMapping("/actualizar")
+    public RespuestaServidor<Usuario> actualizarUsuario(@RequestBody ActualizarUsuarioDTO datos) {
+        return service.actualizarUsuario(datos);
+    }
+
+    @GetMapping("/buscarPorNombre/{nombreCompleto}")
+    public RespuestaServidor<List<Usuario>> buscarUsuarioPorNombre(@PathVariable String nombreCompleto) {
+        return service.buscarPorNombre(nombreCompleto);
+    }
+
 }
