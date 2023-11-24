@@ -5,9 +5,11 @@ import la_dominga.entidades.Usuario;
 import la_dominga.entidades.dto.ActualizarUsuarioDTO;
 import la_dominga.servidor.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -21,16 +23,14 @@ public class UsuarioController {
         this.service = service;
     }
 
-    @PostMapping("/guardar")
-    public ResponseEntity<RespuestaServidor<Usuario>> guardarUsuario(@Valid @RequestBody Usuario usuario) {
-        RespuestaServidor<Usuario> respuesta = service.guardarUsuario(usuario);
-        return ResponseEntity.ok(respuesta);
+    @PostMapping
+    public RespuestaServidor save(@Valid @RequestBody Usuario u){
+        return this.service.registrarUsuario(u);
     }
 
     @PostMapping("/iniciarSesion")
-    public ResponseEntity<RespuestaServidor<Usuario>> iniciarSesion(@RequestParam String correo, @RequestParam String clave) {
-        RespuestaServidor<Usuario> respuesta = service.iniciarSesion(correo, clave);
-        return ResponseEntity.ok(respuesta);
+    public RespuestaServidor<Usuario> iniciarSesion(@RequestParam String correo, @RequestParam String clave) {
+        return service.iniciarSesion(correo, clave);
     }
 
     @GetMapping("/listar")

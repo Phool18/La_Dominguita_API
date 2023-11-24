@@ -26,7 +26,7 @@ public class UsuarioService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public RespuestaServidor<Usuario> iniciarSesion(String correo, String clave){
+    public RespuestaServidor<Usuario> iniciarSesion(String correo, String clave) {
         Optional<Usuario> optU = repository.findByCorreo(correo);
         if (optU.isPresent() && passwordEncoder.matches(clave, optU.get().getClave())) {
             return new RespuestaServidor<>(TIPO_AUTH, RPTA_OK, "Haz iniciado sesión correctamente", optU.get());
@@ -34,13 +34,24 @@ public class UsuarioService {
             return new RespuestaServidor<>(TIPO_AUTH, RPTA_WARNING, "Correo o contraseña incorrecta", null);
         }
     }
-    public RespuestaServidor<Usuario> guardarUsuario(Usuario u){
-        boolean existe = u.getId() > 0 && repository.existsById(u.getId());
-        u.setClave(passwordEncoder.encode(u.getClave()));
-        Usuario usuarioGuardado = repository.save(u);
-        String mensaje = existe ? "Datos del usuario actualizados" : "Usuario Registrado Correctamente";
-        return new RespuestaServidor<>(TIPO_DATA, RPTA_OK, mensaje, usuarioGuardado);
+
+    public RespuestaServidor<Usuario> registrarUsuario(Usuario usuario) {
+        // Verificar si ya existe un usuario con el mismo correo electrónico
+        Optional<Usuario> usuarioExistente = repository.findByCorreo(usuario.getCorreo());
+        if (usuarioExistente.isPresent()) {
+            // Usuario ya existe, no se puede crear uno nuevo con el mismo correo
+            return new RespuestaServidor<>(TIPO_DATA, RPTA_WARNING, "Ya existe un usuario con este correo electrónico", null);
+        }
+
+        // Codificar la contraseña del nuevo usuario
+        usuario.setClave(passwordEncoder.encode(usuario.getClave()));
+
+        // Guardar el nuevo usuario
+        Usuario usuarioGuardado = repository.save(usuario);
+        return new RespuestaServidor<>(TIPO_DATA, RPTA_OK, "Usuario registrado con éxito", usuarioGuardado);
     }
+
+
 
     public List<Usuario> listarUsuarios() {
         return repository.listarTodosLosUsuarios();

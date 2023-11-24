@@ -26,9 +26,8 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<RespuestaServidor> guardarCliente(@Valid @RequestBody Cliente cliente) {
-        RespuestaServidor respuesta = this.service.guardarCliente(cliente);
-        return new ResponseEntity<>(respuesta, respuesta.getRpta() == 0 ? HttpStatus.OK : HttpStatus.BAD_REQUEST);
+    public RespuestaServidor save(@Valid @RequestBody Cliente cliente){
+        return this.service.save(cliente);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

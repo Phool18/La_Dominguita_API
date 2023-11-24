@@ -17,7 +17,9 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Integer> {
 
     @Query(value = "SELECT CASE WHEN COUNT(u) > 0 THEN true ELSE false END FROM Usuario u WHERE u.correo = :correo")
     boolean existeMismoCorreo(@Param("correo") String correo);
-    Optional<Usuario> findByCorreo(String correo);
+    @Query("SELECT U FROM Usuario U WHERE U.correo = :correo")
+    Optional<Usuario> findByCorreo(@Param("correo") String correo);
+
     @Query("SELECT u FROM Usuario u")
     List<Usuario> listarTodosLosUsuarios();
 

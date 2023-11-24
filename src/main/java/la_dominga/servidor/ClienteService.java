@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import static la_dominga.configuraciones.Resultado.*;
+
 @Service
 @Transactional
 public class ClienteService {
@@ -26,24 +28,23 @@ public class ClienteService {
         this.validator = validator;
     }
 
-    public RespuestaServidor<Cliente> guardarCliente(Cliente cliente) {
-        Set<ConstraintViolation<Cliente>> violaciones = validator.validate(cliente);
-        if (!violaciones.isEmpty()) {
-            StringBuilder mensajes = new StringBuilder();
-            for (ConstraintViolation<Cliente> violacion : violaciones) {
-                mensajes.append(violacion.getMessage()).append("\n");
+    public RespuestaServidor save(Cliente c) {
+        Set<ConstraintViolation<Cliente>> violations = validator.validate(c);
+        if (!violations.isEmpty()) {
+            StringBuilder sb = new StringBuilder();
+            for (ConstraintViolation<Cliente> constraintViolation : violations) {
+                sb.append(constraintViolation.getMessage()).append("\n");
             }
-            throw new ValidationException(mensajes.toString());
+            return new RespuestaServidor(TIPO_RESULT, RPTA_WARNING, sb.toString(), null);
         }
 
-        try {
-            Cliente clienteGuardado = clienteRepository.save(cliente);
-            return new RespuestaServidor<>("Success", 200, "Cliente guardado con éxito", clienteGuardado);
-        } catch (Exception e) {
-            // Aquí puedes manejar diferentes tipos de excepciones de manera más específica si lo deseas
-            return new RespuestaServidor<>("Error", 500, "Error al guardar el cliente: " + e.getMessage(), null);
-        }
+        // Guarda o actualiza directamente el cliente
+        clienteRepository.save(c);
+        return new RespuestaServidor(TIPO_DATA, RPTA_OK, "Operación realizada con éxito", c);
     }
+
+
+
     public List<Cliente> listarClientes() {
         return clienteRepository.listarTodosLosClientes();
     }
