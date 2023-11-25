@@ -16,17 +16,6 @@ public class DatosCompra {
     @ManyToOne
     private CarritoDeCompras carritoDeCompras;
 
-    public DatosCompra() {
-    }
-
-    public DatosCompra(int id, int cantidad, Double precio, Producto producto, CarritoDeCompras carritoDeCompras) {
-        this.id = id;
-        this.cantidad = cantidad;
-        this.precio = precio;
-        this.producto = producto;
-        this.carritoDeCompras = carritoDeCompras;
-    }
-
     public int getId() {
         return id;
     }

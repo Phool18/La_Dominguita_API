@@ -82,5 +82,8 @@ public class UsuarioService {
         }
         return new RespuestaServidor<>(Resultado.TIPO_DATA, Resultado.RPTA_OK, "Usuarios encontrados", usuarios);
     }
-
+    // Método para obtener un usuario por su ID
+    public Optional<Usuario> obtenerUsuarioPorId(int usuarioId) {
+        return repository.findById(usuarioId);
+    }
 }

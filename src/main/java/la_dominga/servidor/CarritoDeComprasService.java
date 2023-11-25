@@ -11,6 +11,7 @@ import la_dominga.repositorio.ProductoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -34,19 +35,19 @@ public class CarritoDeComprasService {
 
     //METODO PARA GUARDAR EL PEDIDO DEL CLIENTE
     public RespuestaServidor generarPedido(CrearPedidoDTO crearPedidoDTO) {
-        CarritoDeCompras carrito = crearPedidoDTO.getCarritoDeCompras();
-        carrito.setFechaCompra(new java.sql.Date(new Date().getTime()));
-        carrito.setCliente(crearPedidoDTO.getCliente());
-        carritoDeComprasRepository.save(carrito);
-
+        Date date = new Date();
+        crearPedidoDTO.getCarritoDeCompras().setFechaCompra(new Timestamp(date.getTime()));
+        crearPedidoDTO.getCarritoDeCompras().setMonto(crearPedidoDTO.getCarritoDeCompras().getMonto());
+        crearPedidoDTO.getCarritoDeCompras().setCliente(crearPedidoDTO.getCliente());
+        this.carritoDeComprasRepository.save(crearPedidoDTO.getCarritoDeCompras());
         for (DatosCompra datosCompra : crearPedidoDTO.getInformacionDeLaVenta()) {
-            datosCompra.setCarritoDeCompras(carrito); // Establecer la relación con el carrito
-            productoRepository.gestionarVenta(datosCompra.getCantidad(), datosCompra.getProducto().getId());
+            datosCompra.setCarritoDeCompras(crearPedidoDTO.getCarritoDeCompras());
+            this.productoRepository.gestionarVenta(datosCompra.getCantidad(), datosCompra.getProducto().getId());
         }
+        //Llamamos al DetallePedidoService
+        this.datosCompraService.guardarInformacionDeLaVenta(crearPedidoDTO.getInformacionDeLaVenta());
+        return new RespuestaServidor(TIPO_DATA, RPTA_OK, OPERACION_CORRECTA, crearPedidoDTO);
 
-        datosCompraService.guardarInformacionDeLaVenta(crearPedidoDTO.getInformacionDeLaVenta()); // Guardar todos los detalles de compra
-
-        return new RespuestaServidor(TIPO_DATA, RPTA_OK, OPERACION_CORRECTA, carrito);
     }
     //METODO PARA DEVOLVER EL PEDIDO DE UN CLIENTE
     public RespuestaServidor<List<ImprimirPedidosDTO>> devolverMisCompras(int idCli) {

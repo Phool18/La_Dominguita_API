@@ -33,17 +33,6 @@ public class TarjetaCredito {
     @JoinColumn(name = "usuario_id", nullable = false)
     private Usuario usuario;
 
-    public TarjetaCredito() {
-    }
-
-    public TarjetaCredito(int id, String numeroTarjeta, String titular, String mes_anio, String cvv, Usuario usuario) {
-        this.id = id;
-        this.numeroTarjeta = numeroTarjeta;
-        this.titular = titular;
-        this.mes_anio = mes_anio;
-        this.cvv = cvv;
-        this.usuario = usuario;
-    }
 
     public int getId() {
         return id;

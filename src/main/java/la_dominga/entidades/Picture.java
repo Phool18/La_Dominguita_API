@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.persistence.*;
 
 @Entity
-public class Foto {
+public class Picture {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -23,7 +23,7 @@ public class Foto {
     @Transient
     private String urlFile;
 
-    public Foto() {
+    public Picture() {
         id = 0;
         nombreFoto = "";
         nombreArchivo = "";

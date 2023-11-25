@@ -10,6 +10,6 @@ import org.springframework.stereotype.Repository;
 public interface CarritoDeComprasRepository extends CrudRepository<CarritoDeCompras, Integer> {
 
     @Query("SELECT c FROM CarritoDeCompras c WHERE c.cliente.id = :idCliente")
-    Iterable<CarritoDeCompras> devolverCompraPorCliente(@Param("idCliente") int idCliente);
+    Iterable<CarritoDeCompras> devolverCompraPorCliente(int idCliente);
 
 }

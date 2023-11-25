@@ -2,8 +2,8 @@ package la_dominga.controlador;
 
 
 import la_dominga.configuraciones.RespuestaServidor;
-import la_dominga.entidades.Foto;
-import la_dominga.servidor.FotoService;
+import la_dominga.entidades.Picture;
+import la_dominga.servidor.PictureService;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("foto")
-public class FotoController {
-    private FotoService service;
+public class PictureController {
+    private PictureService service;
 
-    public FotoController(FotoService service) {
+    public PictureController(PictureService service) {
         this.service = service;
     }
 
@@ -35,11 +35,11 @@ public class FotoController {
     }
 
     @PostMapping
-    public RespuestaServidor save(@ModelAttribute Foto obj) {
+    public RespuestaServidor save(@ModelAttribute Picture obj) {
         return service.save(obj);
     }
 
-    public RespuestaServidor update(Long aLong, Foto obj) {
+    public RespuestaServidor update(Long aLong, Picture obj) {
         return null;
     }
 

@@ -21,7 +21,7 @@ public class Cliente {
     private String numeroTelefonico;
 
     @OneToOne
-    private Foto foto;
+    private Picture foto;
 
     public int getId() {
         return id;
@@ -47,11 +47,11 @@ public class Cliente {
         this.numeroTelefonico = numeroTelefonico;
     }
 
-    public Foto getFoto() {
+    public Picture getFoto() {
         return foto;
     }
 
-    public void setFoto(Foto foto) {
+    public void setFoto(Picture foto) {
         this.foto = foto;
     }
     public String getNombreCompletoCliente() {

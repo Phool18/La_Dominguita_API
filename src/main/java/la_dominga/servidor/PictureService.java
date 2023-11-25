@@ -2,8 +2,8 @@ package la_dominga.servidor;
 
 
 import la_dominga.configuraciones.RespuestaServidor;
-import la_dominga.entidades.Foto;
-import la_dominga.repositorio.FotoRepository;
+import la_dominga.entidades.Picture;
+import la_dominga.repositorio.PictureRepository;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -19,17 +19,17 @@ import static la_dominga.configuraciones.Resultado.*;
 
 @Service
 @Transactional
-public class FotoService {
-    private FotoRepository repo;
+public class PictureService {
+    private PictureRepository repo;
     private FileStorageService storageService;
 
-    public FotoService(FotoRepository repo, FileStorageService storageService) {
+    public PictureService(PictureRepository repo, FileStorageService storageService) {
         this.repo = repo;
         this.storageService = storageService;
     }
 
-    public RespuestaServidor<Iterable<Foto>> list() {
-        return new RespuestaServidor<Iterable<Foto>>(TIPO_RESULT, RPTA_OK, OPERACION_CORRECTA, repo.list());
+    public RespuestaServidor<Iterable<Picture>> list() {
+        return new RespuestaServidor<Iterable<Picture>>(TIPO_RESULT, RPTA_OK, OPERACION_CORRECTA, repo.list());
     }
 
 
@@ -38,8 +38,8 @@ public class FotoService {
     }
 
 
-    public RespuestaServidor save(Foto obj) {
-        String fileName = (repo.findById(obj.getId())).orElse(new Foto()).getNombreArchivo();
+    public RespuestaServidor save(Picture obj) {
+        String fileName = (repo.findById(obj.getId())).orElse(new Picture()).getNombreArchivo();
 
         String originalFilename = obj.getFile().getOriginalFilename();
         String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
@@ -73,7 +73,7 @@ public class FotoService {
     }
 
     public ResponseEntity<Resource> downloadByFileName(String fileName, HttpServletRequest request) {
-        Foto doc = repo.findByFileName(fileName).orElse(new Foto());
+        Picture doc = repo.findByFileName(fileName).orElse(new Picture());
         return download(doc.getCompleteFileName(), request);
     }
 
@@ -82,7 +82,7 @@ public class FotoService {
         return null;
     }
 
-    public HashMap<String, Object> validate(Foto obj) {
+    public HashMap<String, Object> validate(Picture obj) {
         return null;
     }
 }

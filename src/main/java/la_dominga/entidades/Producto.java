@@ -36,19 +36,7 @@ public class Producto {
     private Categoria categoria;
 
     @OneToOne
-    private Foto foto;
-    public Producto() {
-    }
-
-    public Producto(int id, String nombre, String descripcion, double precio, int cantidadEnStock, Categoria categoria, Foto foto) {
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.precio = precio;
-        this.cantidadEnStock = cantidadEnStock;
-        this.categoria = categoria;
-        this.foto = foto;
-    }
+    private Picture foto;
 
     public int getId() {
         return id;
@@ -90,11 +78,11 @@ public class Producto {
         this.cantidadEnStock = cantidadEnStock;
     }
 
-    public Foto getFoto() {
+    public Picture getFoto() {
         return foto;
     }
 
-    public void setFoto(Foto foto) {
+    public void setFoto(Picture foto) {
         this.foto = foto;
     }
 

@@ -11,22 +11,12 @@ public class CarritoDeCompras {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column
-    @JsonFormat(pattern = "dd-MM-yyyy", timezone = "America/Lima")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss", timezone = "America/Lima")
     private Date fechaCompra;
     @ManyToOne
     private Cliente cliente;
     @Column
     private Double monto;
-
-    public CarritoDeCompras() {
-    }
-
-    public CarritoDeCompras(int id, Date fechaCompra, Cliente cliente, Double monto) {
-        this.id = id;
-        this.fechaCompra = fechaCompra;
-        this.cliente = cliente;
-        this.monto = monto;
-    }
 
     public int getId() {
         return id;
@@ -39,7 +29,9 @@ public class CarritoDeCompras {
     public Date getFechaCompra() {
         return fechaCompra;
     }
-
+    public CarritoDeCompras() {
+        this.fechaCompra = new Date();
+    }
     public void setFechaCompra(Date fechaCompra) {
         this.fechaCompra = fechaCompra;
     }
