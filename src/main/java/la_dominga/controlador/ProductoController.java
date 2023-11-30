@@ -3,10 +3,12 @@ package la_dominga.controlador;
 import la_dominga.configuraciones.RespuestaServidor;
 import la_dominga.entidades.Producto;
 import la_dominga.servidor.ProductoService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/productos")
@@ -36,5 +38,18 @@ public class ProductoController {
     public RespuestaServidor<List<Producto>> listarProductosTop() {
         return productoService.listarProductosTop();
     }
+    @GetMapping
+    public RespuestaServidor<List<Producto>> obtenerTodosLosProductos() {
+        return productoService.obtenerTodosLosProductos();
+    }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<RespuestaServidor<Producto>> obtenerProductoPorId(@PathVariable int id) {
+        Optional<Producto> producto = productoService.obtenerProductoPorId(id);
+        if (producto.isPresent()) {
+            return ResponseEntity.ok(new RespuestaServidor<>("Producto", 1, "Producto encontrado", producto.get()));
+        } else {
+            return ResponseEntity.ok(new RespuestaServidor<>("Producto", 0, "Producto no encontrado", null));
+        }
+    }
 }

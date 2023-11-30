@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static la_dominga.configuraciones.Resultado.*;
 
@@ -36,5 +37,17 @@ public class ProductoService {
     public RespuestaServidor<List<Producto>> listarProductosTop() {
         List<Producto> productos = productoRepository.listarProductosTop();
         return new RespuestaServidor<>(TIPO_DATA, RPTA_OK, "Productos Top obtenidos con éxito", productos);
+    }
+    public RespuestaServidor<List<Producto>> obtenerTodosLosProductos() {
+        List<Producto> productos = (List<Producto>) productoRepository.findAll();
+        if (!productos.isEmpty()) {
+            return new RespuestaServidor<>("Lista de Productos", 1, "Productos obtenidos con éxito", productos);
+        } else {
+            return new RespuestaServidor<>("Lista de Productos", 0, "No hay productos disponibles", null);
+        }
+    }
+
+    public Optional<Producto> obtenerProductoPorId(int id) {
+        return productoRepository.findById(id);
     }
 }
