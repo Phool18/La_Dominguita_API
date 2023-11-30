@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -23,8 +24,9 @@ public class CategoriaController {
         this.service = service;
     }
     @GetMapping
-    public RespuestaServidor listarCategoriasBD() {
-        return this.service.listarCategorias();
+    public ResponseEntity<RespuestaServidor<List<Categoria>>> listarCategorias() {
+        RespuestaServidor<List<Categoria>> respuesta = service.listarTodasLasCategorias();
+        return ResponseEntity.ok(respuesta);
     }
 
     @PostMapping

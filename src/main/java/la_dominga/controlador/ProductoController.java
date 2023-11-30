@@ -6,6 +6,7 @@ import la_dominga.servidor.ProductoService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/productos")
@@ -29,6 +30,11 @@ public class ProductoController {
     public RespuestaServidor<Producto> agregarProducto(@Valid @RequestBody Producto producto) {
         Producto productoGuardado = productoService.guardarProducto(producto);
         return new RespuestaServidor<>("Success", 200, "Producto guardado con éxito", productoGuardado);
+    }
+
+    @GetMapping("/top")
+    public RespuestaServidor<List<Producto>> listarProductosTop() {
+        return productoService.listarProductosTop();
     }
 
 }

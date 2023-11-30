@@ -38,6 +38,9 @@ public class Producto {
     @OneToOne
     private Picture foto;
 
+    @Column
+    private boolean top;
+
     public int getId() {
         return id;
     }
@@ -92,5 +95,13 @@ public class Producto {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
+    }
+
+    public boolean isTop() {
+        return top;
+    }
+
+    public void setTop(boolean top) {
+        this.top = top;
     }
 }

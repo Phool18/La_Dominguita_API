@@ -32,4 +32,9 @@ public class ProductoService {
     public Producto guardarProducto(Producto producto) {
         return productoRepository.save(producto);
     }
+
+    public RespuestaServidor<List<Producto>> listarProductosTop() {
+        List<Producto> productos = productoRepository.listarProductosTop();
+        return new RespuestaServidor<>(TIPO_DATA, RPTA_OK, "Productos Top obtenidos con éxito", productos);
+    }
 }

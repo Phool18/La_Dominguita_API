@@ -5,11 +5,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface CategoriaRepository extends CrudRepository<Categoria, Integer> {
-
-    @Query("SELECT c FROM Categoria c")
-    Iterable<Categoria> listarCategorias();
 
     @Override
     <S extends Categoria> S save(S entity);
