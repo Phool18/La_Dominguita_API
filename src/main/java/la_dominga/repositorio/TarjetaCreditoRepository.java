@@ -1,6 +1,7 @@
 package la_dominga.repositorio;
 
 import la_dominga.entidades.TarjetaCredito;
+import la_dominga.entidades.Usuario;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -13,8 +14,7 @@ public interface TarjetaCreditoRepository extends CrudRepository<TarjetaCredito,
 
     @Query("SELECT t FROM TarjetaCredito t WHERE t.numeroTarjeta = :numeroTarjeta AND t.titular = :titular AND t.cvv = :cvv AND t.mes_anio = :mesAnio")
     Optional<TarjetaCredito> validarTarjeta(@Param("numeroTarjeta") String numeroTarjeta, @Param("titular") String titular, @Param("cvv") String cvv, @Param("mesAnio") String mesAnio);
-    boolean existsByNumeroTarjetaAndUsuarioId(String numeroTarjeta, int usuarioId);
-
-    List<TarjetaCredito> findByUsuarioId(int usuarioId);
+    @Query("SELECT u FROM TarjetaCredito u")
+    List<TarjetaCredito> listarTodasLasTarjetas();
 
 }

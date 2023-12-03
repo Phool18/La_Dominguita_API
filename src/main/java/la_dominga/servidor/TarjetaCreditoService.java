@@ -1,11 +1,10 @@
 package la_dominga.servidor;
 
 import la_dominga.entidades.TarjetaCredito;
+import la_dominga.entidades.Usuario;
 import la_dominga.entidades.dto.TarjetaCreditoDTO;
 import la_dominga.repositorio.TarjetaCreditoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -35,11 +34,6 @@ public class TarjetaCreditoService {
             throw new IllegalArgumentException("El CVV debe tener exactamente 3 dígitos.");
         }
 
-        // Verificar si la tarjeta ya existe para el usuario
-        if (tarjetaRepository.existsByNumeroTarjetaAndUsuarioId(tarjeta.getNumeroTarjeta(), tarjeta.getUsuario().getId())) {
-            throw new IllegalArgumentException("Una tarjeta con este número ya está registrada para este usuario.");
-        }
-
         // Validar la fecha
         if (!isValidDate(tarjeta.getMes_anio())) {
             throw new IllegalArgumentException("La fecha en el campo mes_anio no es válida.");
@@ -66,8 +60,8 @@ public class TarjetaCreditoService {
         return tarjetaRepository.validarTarjeta(numeroTarjeta, titular, cvv, mesAnio);
     }
 
-    public List<TarjetaCreditoDTO> listarTarjetasOcultasPorUsuario(int usuarioId) {
-        List<TarjetaCredito> tarjetas = tarjetaRepository.findByUsuarioId(usuarioId);
+    public List<TarjetaCreditoDTO> listarTarjetasOcultasPorUsuario() {
+        List<TarjetaCredito> tarjetas = (List<TarjetaCredito>) tarjetaRepository.findAll();
         return tarjetas.stream().map(this::convertirADTO).collect(Collectors.toList());
     }
 
@@ -86,5 +80,8 @@ public class TarjetaCreditoService {
         dto.setCvv("***");
         dto.setMes_anio("**/**");
         return dto;
+    }
+    public List<TarjetaCredito> listarTodasLasTarjetas() {
+        return tarjetaRepository.listarTodasLasTarjetas();
     }
 }

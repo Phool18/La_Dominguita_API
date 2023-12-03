@@ -3,6 +3,7 @@ package la_dominga.controlador;
 
 import la_dominga.configuraciones.RespuestaServidor;
 import la_dominga.entidades.TarjetaCredito;
+import la_dominga.entidades.Usuario;
 import la_dominga.entidades.dto.TarjetaCreditoDTO;
 import la_dominga.servidor.TarjetaCreditoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,11 +46,15 @@ public class TarjetaCreditoController {
         }
     }
 
-    @GetMapping("/usuario/{usuarioId}")
-    public RespuestaServidor<List<TarjetaCreditoDTO>> listarTarjetasPorUsuario(@PathVariable int usuarioId) {
-        List<TarjetaCreditoDTO> tarjetasDTO = tarjetaCreditoService.listarTarjetasOcultasPorUsuario(usuarioId);
+    @GetMapping("/usuario")
+    public RespuestaServidor<List<TarjetaCreditoDTO>> listarTarjetasPorUsuario() {
+        List<TarjetaCreditoDTO> tarjetasDTO = tarjetaCreditoService.listarTarjetasOcultasPorUsuario();
         return new RespuestaServidor<>("Success", 200, "Tarjetas de crédito obtenidas", tarjetasDTO);
     }
 
-
+    @GetMapping("/listar")
+    public ResponseEntity<List<TarjetaCredito>> listarUsuarios() {
+        List<TarjetaCredito> tarjetas = tarjetaCreditoService.listarTodasLasTarjetas();
+        return ResponseEntity.ok(tarjetas);
+    }
 }

@@ -29,11 +29,6 @@ public class TarjetaCredito {
     @Size(min = 3, max = 3, message = "Error")
     private String cvv;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
-
-
     public int getId() {
         return id;
     }
@@ -73,15 +68,6 @@ public class TarjetaCredito {
     public void setCvv(String cvv) {
         this.cvv = cvv;
     }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
 
     public boolean isValidDate() {
         try {
