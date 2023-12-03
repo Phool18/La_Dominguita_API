@@ -40,8 +40,9 @@ public class UsuarioController {
     }
 
     @PutMapping("/actualizar")
-    public RespuestaServidor<Usuario> actualizarUsuario(@RequestBody ActualizarUsuarioDTO datos) {
-        return service.actualizarUsuario(datos);
+    public ResponseEntity<RespuestaServidor<Usuario>> actualizarUsuario(@RequestBody ActualizarUsuarioDTO actualizarUsuarioDTO) {
+        RespuestaServidor<Usuario> respuesta = service.actualizarUsuario(actualizarUsuarioDTO);
+        return ResponseEntity.ok(respuesta);
     }
 
     @GetMapping("/buscarPorNombre/{nombreCompleto}")

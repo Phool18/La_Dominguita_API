@@ -1,27 +1,27 @@
 package la_dominga.entidades.dto;
 
+import la_dominga.entidades.Cliente;
+
 public class ActualizarUsuarioDTO {
-    private int idUsuario;
+    private int id;
     private String correo;
-    private String nombreCompleto;
-    private String numeroTelefonico;
+    private Cliente cliente;
 
     public ActualizarUsuarioDTO() {
     }
 
-    public ActualizarUsuarioDTO(int idUsuario, String correo, String nombreCompleto, String numeroTelefonico) {
-        this.idUsuario = idUsuario;
+    public ActualizarUsuarioDTO(int id, String correo, Cliente cliente) {
+        this.id = id;
         this.correo = correo;
-        this.nombreCompleto = nombreCompleto;
-        this.numeroTelefonico = numeroTelefonico;
+        this.cliente = cliente;
     }
 
-    public int getIdUsuario() {
-        return idUsuario;
+    public int getId() {
+        return id;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getCorreo() {
@@ -32,19 +32,11 @@ public class ActualizarUsuarioDTO {
         this.correo = correo;
     }
 
-    public String getNombreCompleto() {
-        return nombreCompleto;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setNombreCompleto(String nombreCompleto) {
-        this.nombreCompleto = nombreCompleto;
-    }
-
-    public String getNumeroTelefonico() {
-        return numeroTelefonico;
-    }
-
-    public void setNumeroTelefonico(String numeroTelefonico) {
-        this.numeroTelefonico = numeroTelefonico;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 }

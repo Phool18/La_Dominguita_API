@@ -57,23 +57,35 @@ public class UsuarioService {
         return repository.listarTodosLosUsuarios();
     }
 
-    public RespuestaServidor<Usuario> actualizarUsuario(ActualizarUsuarioDTO datos) {
-        Optional<Usuario> usuarioOpt = repository.findById(datos.getIdUsuario());
+    public RespuestaServidor<Usuario> actualizarUsuario(ActualizarUsuarioDTO actualizarUsuarioDTO) {
+        int idUsuario = actualizarUsuarioDTO.getId();
+        Optional<Usuario> usuarioOpt = repository.findById(idUsuario);
+
         if (!usuarioOpt.isPresent()) {
             return new RespuestaServidor<>(Resultado.TIPO_DATA, Resultado.RPTA_ERROR, Resultado.OPERACION_ERRONEA, null);
         }
 
         Usuario usuario = usuarioOpt.get();
-        usuario.setCorreo(datos.getCorreo());
-        Cliente cliente = usuario.getCliente();
-        cliente.setNombreCompleto(datos.getNombreCompleto());
-        cliente.setNumeroTelefonico(datos.getNumeroTelefonico());
-        // Guardar cambios
+        usuario.setCorreo(actualizarUsuarioDTO.getCorreo());
+
+        // Actualiza los datos del cliente si se proporcionan en el DTO
+        Cliente clienteDTO = actualizarUsuarioDTO.getCliente();
+        if (clienteDTO != null) {
+            Cliente cliente = usuario.getCliente();
+            if (cliente == null) {
+                cliente = new Cliente();
+                usuario.setCliente(cliente);
+            }
+            cliente.setNombreCompleto(clienteDTO.getNombreCompleto());
+            cliente.setNumeroTelefonico(clienteDTO.getNumeroTelefonico());
+        }
+
+        // Guarda los cambios
         repository.save(usuario);
-        // Más lógica si es necesario...
 
         return new RespuestaServidor<>(Resultado.TIPO_DATA, Resultado.RPTA_OK, Resultado.OPERACION_CORRECTA, usuario);
     }
+
 
     public RespuestaServidor<List<Usuario>> buscarPorNombre(String nombreCompleto) {
         List<Usuario> usuarios = repository.findByNombreCompleto(nombreCompleto);
