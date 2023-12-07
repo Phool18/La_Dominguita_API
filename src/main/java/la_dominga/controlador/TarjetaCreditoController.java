@@ -3,15 +3,11 @@ package la_dominga.controlador;
 
 import la_dominga.configuraciones.RespuestaServidor;
 import la_dominga.entidades.TarjetaCredito;
-import la_dominga.entidades.Usuario;
 import la_dominga.entidades.dto.TarjetaCreditoDTO;
 import la_dominga.servidor.TarjetaCreditoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,11 +18,11 @@ import static la_dominga.configuraciones.Resultado.*;
 public class TarjetaCreditoController {
 
     @Autowired
-    private TarjetaCreditoService tarjetaCreditoService;
+    private TarjetaCreditoService service;
     @PostMapping("/guardar")
     public ResponseEntity<RespuestaServidor> guardarTarjeta(@RequestBody TarjetaCredito tarjeta) {
         try {
-            TarjetaCredito tarjetaGuardada = tarjetaCreditoService.guardarTarjeta(tarjeta);
+            TarjetaCredito tarjetaGuardada = service.guardarTarjeta(tarjeta);
             return ResponseEntity.ok(new RespuestaServidor(TIPO_DATA, RPTA_OK, OPERACION_CORRECTA, tarjetaGuardada));
         } catch (IllegalArgumentException e) {
             // Handle the case where the credit card already exists for the user
@@ -38,7 +34,7 @@ public class TarjetaCreditoController {
         if (numeroTarjeta == null || titular == null || cvv == null || mesAnio == null) {
             return new RespuestaServidor<>("Error", 400, "Parámetros inválidos", "Parámetros de validación de tarjeta incompletos o incorrectos.");
         }
-        Optional<TarjetaCredito> resultado = tarjetaCreditoService.validarTarjeta(numeroTarjeta, titular, cvv, mesAnio);
+        Optional<TarjetaCredito> resultado = service.validarTarjeta(numeroTarjeta, titular, cvv, mesAnio);
         if (resultado.isPresent()) {
             return new RespuestaServidor<>("Success", 1, "Validación de tarjeta exitosa", "La tarjeta es válida.");
         } else {
@@ -48,13 +44,13 @@ public class TarjetaCreditoController {
 
     @GetMapping("/usuario")
     public RespuestaServidor<List<TarjetaCreditoDTO>> listarTarjetasPorUsuario() {
-        List<TarjetaCreditoDTO> tarjetasDTO = tarjetaCreditoService.listarTarjetasOcultasPorUsuario();
+        List<TarjetaCreditoDTO> tarjetasDTO = service.listarTarjetasOcultasPorUsuario();
         return new RespuestaServidor<>("Success", 200, "Tarjetas de crédito obtenidas", tarjetasDTO);
     }
 
     @GetMapping("/listar")
     public ResponseEntity<List<TarjetaCredito>> listarUsuarios() {
-        List<TarjetaCredito> tarjetas = tarjetaCreditoService.listarTodasLasTarjetas();
+        List<TarjetaCredito> tarjetas = service.listarTodasLasTarjetas();
         return ResponseEntity.ok(tarjetas);
     }
 }

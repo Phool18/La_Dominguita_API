@@ -13,7 +13,8 @@ import java.util.Optional;
 public interface TarjetaCreditoRepository extends CrudRepository<TarjetaCredito, Integer> {
 
     @Query("SELECT t FROM TarjetaCredito t WHERE t.numeroTarjeta = :numeroTarjeta AND t.titular = :titular AND t.cvv = :cvv AND t.mes_anio = :mesAnio")
-    Optional<TarjetaCredito> validarTarjeta(@Param("numeroTarjeta") String numeroTarjeta, @Param("titular") String titular, @Param("cvv") String cvv, @Param("mesAniolo") String mesAnio);
+    Optional<TarjetaCredito> validarTarjeta(@Param("numeroTarjeta") String numeroTarjeta, @Param("titular") String titular, @Param("cvv") String cvv, @Param("mesAnio") String mesAnio);
+
     @Query("SELECT u FROM TarjetaCredito u")
     List<TarjetaCredito> listarTodasLasTarjetas();
 
