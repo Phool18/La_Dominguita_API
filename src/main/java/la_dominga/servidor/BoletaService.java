@@ -45,6 +45,11 @@ public class BoletaService {
                 .add(datosPedido.getCarritoDeCompras().getFechaCompra().toString())
                 .setFontSize(10) // Reducción del tamaño de la fuente
                 .setMarginBottom(5); // Reducción del margen
+        Paragraph userinfo = new Paragraph()
+                .add(new Text("Fecha: ").setBold())
+                .add(datosPedido.getCarritoDeCompras().getCliente().getNombreCompleto().toString())
+                .setFontSize(10) // Reducción del tamaño de la fuente
+                .setMarginBottom(5); // Reducción del margen
 
         // Tabla para detalles de compra
         Table table = new Table(UnitValue.createPercentArray(new float[]{3, 1, 2}))
@@ -64,8 +69,23 @@ public class BoletaService {
         }
 
         // Total
+
+        double montoTotal = datosPedido.getCarritoDeCompras().getMonto();
+        double montoIgv = montoTotal * 0.18; // Calcula el 18% del monto total
+        double precioSinIgv = montoTotal - montoIgv; // Precio total menos IGV
+
+        Paragraph precioSinIgvParagraph = new Paragraph("Sub total: " + String.format("%.2f", precioSinIgv))
+                .setFontSize(10) // Reducción del tamaño de la fuente
+                .setBold()
+                .setTextAlignment(TextAlignment.RIGHT)
+                .setMarginBottom(5);
+        Paragraph igv = new Paragraph("IGV: S/. " + String.format("%.2f", montoIgv))
+                .setFontSize(10) // Reducción del tamaño de la fuente
+                .setBold()
+                .setTextAlignment(TextAlignment.RIGHT)
+                .setMarginBottom(5);
         Paragraph total = new Paragraph("Total: S/. " + datosPedido.getCarritoDeCompras().getMonto())
-                .setFontSize(12) // Reducción del tamaño de la fuente
+                .setFontSize(10) // Reducción del tamaño de la fuente
                 .setBold()
                 .setTextAlignment(TextAlignment.RIGHT)
                 .setMarginBottom(5); // Reducción del margen inferior
@@ -83,7 +103,10 @@ public class BoletaService {
         document.add(logo);
         document.add(header);
         document.add(compraInfo);
+        document.add(userinfo);
         document.add(table);
+        document.add(precioSinIgvParagraph);
+        document.add(igv);
         document.add(total);
         document.add(code128Image);
 
