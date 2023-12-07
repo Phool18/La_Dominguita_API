@@ -11,5 +11,4 @@ public interface CarritoDeComprasRepository extends CrudRepository<CarritoDeComp
 
     @Query("SELECT c FROM CarritoDeCompras c WHERE c.cliente.id = :idCliente")
     Iterable<CarritoDeCompras> devolverCompraPorCliente(int idCliente);
-
 }

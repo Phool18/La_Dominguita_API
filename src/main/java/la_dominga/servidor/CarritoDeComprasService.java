@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static la_dominga.configuraciones.Resultado.*;
 
@@ -57,5 +58,26 @@ public class CarritoDeComprasService {
             imprimirPedidos.add(new ImprimirPedidosDTO(p, datosCompraRepository.devolverComprasPorId(p.getId())));
         });
         return new RespuestaServidor<>(OPERACION_CORRECTA, RPTA_OK, "Petición Encontrada", imprimirPedidos);
+    }
+    public RespuestaServidor<List<DatosCompra>> obtenerDetallesPorCarrito(int idCarrito) {
+        Iterable<DatosCompra> detalles = datosCompraRepository.devolverComprasPorId(idCarrito);
+        List<DatosCompra> listaDetalles = new ArrayList<>();
+        detalles.forEach(listaDetalles::add);
+
+        if (listaDetalles.isEmpty()) {
+            return new RespuestaServidor<>(OPERACION_INCORRECTA, RPTA_ERROR, "No se encontraron detalles para el carrito de compras", null);
+        } else {
+            return new RespuestaServidor<>(OPERACION_CORRECTA, RPTA_OK, "Detalles encontrados", listaDetalles);
+        }
+    }
+    public ImprimirPedidosDTO obtenerDatosPedido(int idCompra) {
+        Optional<CarritoDeCompras> carritoOpt = carritoDeComprasRepository.findById(idCompra);
+        if (carritoOpt.isPresent()) {
+            CarritoDeCompras carrito = carritoOpt.get();
+            Iterable<DatosCompra> detalles = datosCompraRepository.devolverComprasPorId(carrito.getId());
+            return new ImprimirPedidosDTO(carrito, detalles);
+        } else {
+            throw new RuntimeException("Compra no encontrada"); // O maneja esta situación como prefieras
+        }
     }
 }

@@ -15,7 +15,6 @@ public class Picture {
     private String tipoFoto;
     private String vigencia;
     private boolean eliminado;
-
     @Transient
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private MultipartFile file;
