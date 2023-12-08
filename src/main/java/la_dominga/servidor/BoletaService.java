@@ -46,7 +46,7 @@ public class BoletaService {
                 .setFontSize(10) // Reducción del tamaño de la fuente
                 .setMarginBottom(5); // Reducción del margen
         Paragraph userinfo = new Paragraph()
-                .add(new Text("Fecha: ").setBold())
+                .add(new Text("Nombre de Cliente: ").setBold())
                 .add(datosPedido.getCarritoDeCompras().getCliente().getNombreCompleto().toString())
                 .setFontSize(10) // Reducción del tamaño de la fuente
                 .setMarginBottom(5); // Reducción del margen
