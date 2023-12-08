@@ -66,6 +66,14 @@ public class UsuarioService {
         }
 
         Usuario usuario = usuarioOpt.get();
+
+        // Verificar si el correo ya está en uso por otro usuario
+        Optional<Usuario> usuarioExistente = repository.findByCorreo(actualizarUsuarioDTO.getCorreo());
+        if (usuarioExistente.isPresent() && usuarioExistente.get().getId() != idUsuario) {
+            // Correo ya en uso por otro usuario
+            return new RespuestaServidor<>(Resultado.TIPO_DATA, Resultado.RPTA_ERROR, "Correo ya en uso", null);
+        }
+
         usuario.setCorreo(actualizarUsuarioDTO.getCorreo());
 
         // Actualiza los datos del cliente si se proporcionan en el DTO
